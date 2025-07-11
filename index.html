@@ -24,7 +24,6 @@
       border-radius: 16px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       position: relative;
-      z-index: 1;
     }
 
     button {
@@ -46,7 +45,6 @@
       align-items: center;
       gap: 10px;
       margin-top: 20px;
-      z-index: 1;
     }
 
     #fyi-dialog {
@@ -79,40 +77,6 @@
       text-align: center;
       z-index: 10;
     }
-
-    /* FULLSCREEN MODAL VIDEO */
-    #fullscreen-video {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.95);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    #fullscreen-video iframe {
-      width: 90vw;
-      height: 50vh;
-      max-width: 960px;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
-
-    #close-video-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 14px;
-      background-color: #ffffff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -127,12 +91,19 @@
   <img id="fyi-image" src="emoji-smiley.gif" alt="emoji" />
 </div>
 
-<!-- Fullscreen Modal Video -->
-<div id="fullscreen-video">
-  <iframe id="fyi-video" src="https://drive.google.com/file/d/1S7Nv9oggpz3rwdAxaZBNFbF44iuPzvg4/preview" allow="autoplay"></iframe>
-  <button id="close-video-btn" onclick="tampilkanAkhir()">Selesai</button>
+<div id="video-wrapper" style="display: none; text-align: center;">
+  <div style="display: flex; justify-content: center;">
+    <iframe 
+      id="fyi-video" 
+      src= "https://drive.google.com/file/d/1S7Nv9oggpz3rwdAxaZBNFbF44iuPzvg4/preview"
+      width="400" 
+      height="300" 
+      allow="autoplay">
+    </iframe>
+  </div>
+  <br>
+  <button id="selesaiBtn" onclick="tampilkanAkhir()" style="display: none;">Selesai</button>
 </div>
-
 <p id="watermark">Made with love and effort by Dem Nuggies, 2025</p>
 
 <script>
@@ -143,10 +114,11 @@
   const fyiBox = document.getElementById("fyi-box");
   const fyiDialogEl = document.getElementById("fyi-dialog");
   const fyiImage = document.getElementById("fyi-image");
-  const fullscreenVideo = document.getElementById("fullscreen-video");
+  const videoWrapper = document.getElementById("video-wrapper");
+  const selesaiBtn = document.getElementById("selesaiBtn");
 
+  let sudahLihatFYI = false;
   let sudahTebakNama = false;
-  let fyiIndex = 0;
   let percobaanNama = 0;
 
   const nextDialog = [
@@ -165,6 +137,17 @@
     { isTebak: true }
   ];
 
+  const perpisahan = [
+    "I hope this year brings you closer to your dreams.",
+    "And hopefully this year brings you only best of the best.",
+    "Terima kasih sudah bersedia meluangkan waktu untuk berinteraksi denganku.",
+    "Tapi ini masih setengah jalan wkwkwkwwk",
+    "Dikit lagi ya, aku masih mau kasih tau beberapa hal penting",
+    "Half way there bro! Semangat mencetnya!",
+  ];
+
+  let fyiIndex = 0;
+
   function keInputNama() {
     container.innerHTML = `
       <h3>Who's there? (silahkan isi dengan nama panggilan)</h3>
@@ -176,8 +159,11 @@
 
   function periksaNama() {
     const nama = document.getElementById("namaInput").value.trim().toLowerCase();
-    if (nama === jawabanBenar.toLowerCase()) lanjutkanProgram();
-    else alert("Yah... bukan kamu yang aku maksud, coba lagi!");
+    if (nama === jawabanBenar.toLowerCase()) {
+      lanjutkanProgram();
+    } else {
+      alert("Yah... bukan kamu yang aku maksud, coba lagi!");
+    }
   }
 
   function lanjutkanProgram() {
@@ -191,7 +177,7 @@
     ];
     let index = 0;
 
-   container.innerHTML = `
+    container.innerHTML = `
       <p id="pesan"></p>
       <button onclick="tampilkanBerikutnya()">Lanjut</button>
     `;
@@ -211,26 +197,81 @@
   function tampilkanSweet17() {
     container.innerHTML = `
       <p><strong>Hehe... Anyway, Happy Sweet 17th Birthday, Ahnaf! 🎂</strong></p>
-      <button onclick="tampilkanDialog()">Lanjut</button>
+      <button onclick="tampilkanInputLanjut()">Lanjut</button>
     `;
   }
 
-  function tampilkanDialog() {
+  function tampilkanInputLanjut() {
+    container.innerHTML = `
+      <p>Tua betul 17 tahun, age bikin KTP :D</p>
+      <input placeholder="Tulis apa aja..." />
+      <br>
+      <button onclick="tampilkanPilihanJawaban()">Ketik apapun untuk lanjutkan</button>
+    `;
+  }
+
+  function tampilkanPilihanJawaban() {
+    container.innerHTML = `
+      <h3>Dan bagaimana hadiahnya?</h3>
+      <button onclick="respon('A')">A. Alamakkk, ga expect aku wak</button><br>
+      <button onclick="respon('B')">B. Bolehlah, aku suka</button><br>
+      <button onclick="respon('C')">C. Suka level 2, terima kasih!</button>
+    `;
+  }
+
+  function respon(pilihan) {
+    let responText = "";
+    if (pilihan === 'A') responText = "Hehe, aku juga ga expect bisa ngasih ini";
+    else if (pilihan === 'B') responText = "Yeyy, kalo kamu suka, aku juga suka";
+    else if (pilihan === 'C') responText = "SERIUS?! Sama-sama kalo begitu....";
+
+    container.innerHTML = `
+      <p>${responText}</p>
+      <button onclick="tampilkanNext()">Lanjut</button>
+    `;
+  }
+
+  function tampilkanNext() {
+    let index = 0;
+
+    container.innerHTML = `
+      <p id="pesanAkhir"></p>
+      <button onclick="nextChapter()">Lanjut</button>
+    `;
+
+    window.nextChapter = function () {
+      if (index < perpisahan.length) {
+        document.getElementById("pesanAkhir").innerText = perpisahan[index];
+        index++;
+      } else {
+        tampilkanWujudAseliAdmin();
+      }
+    };
+
+    nextChapter();
+  }
+
+  function tampilkanWujudAseliAdmin() {
     container.style.display = "none";
     fyiBox.style.display = "flex";
+    fyiIndex = 0;
+    percobaanNama = 0;
     nextFYI();
   }
 
   function nextFYI() {
     const item = nextDialog[fyiIndex];
-    if (item && item.isTebak) tebakPembuat();
-    else if (item) {
+    if (item && item.isTebak) {
+      tebakPembuat();
+    } else if (item) {
       fyiDialogEl.innerText = item.text;
       fyiImage.src = item.img;
       fyiIndex++;
     } else if (sudahTebakNama) {
       fyiBox.style.display = "none";
-      fullscreenVideo.style.display = "flex";
+      videoWrapper.style.display = "block";
+      selesaiBtn.style.display = "inline-block";
+      sudahLihatFYI = true;
     }
   }
 
@@ -251,7 +292,7 @@
       sudahTebakNama = true;
       container.innerHTML = `
         <p>Yayy, kamu benar!</p>
-        <button onclick="tampilkanDialogLanjut()">Lanjut</button>
+        <button onclick="lanjutSetelahTebak()">Lanjut</button>
       `;
     } else {
       percobaanNama++;
@@ -272,11 +313,11 @@
     container.innerHTML = `
       <p>Yah... tidak apa-apa, setidaknya kamu sudah mencoba!<br>
       Mungkin kamu akan tahu setelah video yang akan tampil sebentar lagi.</p>
-      <button onclick="tampilkanDialogLanjut()">Lanjut</button>
+      <button onclick="lanjutSetelahTebak()">Lanjut</button>
     `;
   }
 
-  function tampilkanDialogLanjut() {
+  function lanjutSetelahTebak() {
     container.style.display = "none";
     fyiBox.style.display = "flex";
     fyiDialogEl.innerText = "Sebentar lagi ada video yang aku rekam di 10 Juli, Please jangan skip videonya yaaa! Ada sesuatu yang mau aku sampampaikan :)";
@@ -285,8 +326,8 @@
   }
 
   function tampilkanAkhir() {
-    fullscreenVideo.style.display = "none";
     container.style.display = "block";
+    videoWrapper.style.display = "none";
     container.innerHTML = `
       <h3>Apa yang ingin kamu lakukan?</h3>
       <button onclick="ulangVideo()">Ulangi Video</button><br>
@@ -304,9 +345,11 @@
   }
 
   function ulangVideo() {
-    fullscreenVideo.style.display = "flex";
+    container.style.display = "none";
+    videoWrapper.style.display = "block";
     const video = document.getElementById("fyi-video");
     video.src = video.src;
+    selesaiBtn.style.display = "inline-block";
   }
 </script>
 
