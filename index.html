@@ -96,9 +96,9 @@
     <iframe 
       id="fyi-video" 
       src= "https://drive.google.com/file/d/1S7Nv9oggpz3rwdAxaZBNFbF44iuPzvg4/preview"
-      width="300" 
-      height="300" 
-      allow="autoplay">
+      width: 100%;
+      height: 100%;
+      object-fit: cover;>
     </iframe>
   </div>
   <br>
@@ -123,7 +123,7 @@
   let sudahTebakNama = false;
   let percobaanNama = 0;
 
-  const fyiDialog = [
+  const nextDialog = [
     { text: "Halo, perkenalkan aku Dem Nuggies dan aku membuat program ini untuk memperingati ulang tahun Ahnaf yang ke 17.", img: "emoji-smiley.gif" },
     { text: "Dem Nuggies, A.K.A calon dokter tersebut menghabiskan 2 Bulan untuk belajar, riset dan membuat ini.", img: "smile-keyboard.gif" },
     { text: "Dibantu oleh berbagai sumber, termasuk buku, internet, dan teman-teman.....", img: "smile-keyboard.gif" },
@@ -180,14 +180,14 @@
         document.getElementById("pesan").innerText = pesanAwal[index];
         index++;
       } else {
-        tampilkanTombolWkwk();
+        tampilkanSweet17();
       }
     };
 
     tampilkanBerikutnya();
   }
 
-  function tampilkanTombolWkwk() {
+  function tampilkanSweet17() {
     container.innerHTML = `
       <p><strong>Hehe... Anyway, Happy Sweet 17th Birthday, Ahnaf! 🎂</strong></p>
       <button onclick="tampilkanInputLanjut()">Lanjut</button>
@@ -199,11 +199,11 @@
       <p>Tua betul 17 tahun, age bikin KTP :D</p>
       <input placeholder="Tulis apa aja..." />
       <br>
-      <button onclick="tampilkanPilihanHadiah()">Ketik apapun untuk lanjutkan</button>
+      <button onclick="tampilkanPilihanJawaban()">Ketik apapun untuk lanjutkan</button>
     `;
   }
 
-  function tampilkanPilihanHadiah() {
+  function tampilkanPilihanJawaban() {
     container.innerHTML = `
       <h3>Dan bagaimana hadiahnya?</h3>
       <button onclick="respon('A')">A. Alamakkk, ga expect aku wak</button><br>
@@ -220,11 +220,11 @@
 
     container.innerHTML = `
       <p>${responText}</p>
-      <button onclick="tampilkanPerpisahan()">Lanjut</button>
+      <button onclick="tampilkanNext()">Lanjut</button>
     `;
   }
 
-  function tampilkanPerpisahan() {
+  function tampilkanNext() {
     const perpisahan = [
       "I hope this year brings you closer to your dreams.",
       "And hopefully this year brings you only best of the best.",
@@ -240,19 +240,19 @@
       <button onclick="nextPerpisahan()">Lanjut</button>
     `;
 
-    window.nextPerpisahan = function () {
-      if (index < perpisahan.length) {
-        document.getElementById("pesanAkhir").innerText = perpisahan[index];
+    window.nextChapter = function () {
+      if (index < Chapter.length) {
+        document.getElementById("pesanAkhir").innerText = Chapter[index];
         index++;
       } else {
-        tampilkanFYIGabungan();
+        tampilkanWujudAseliAdmin();
       }
     };
 
-    nextPerpisahan();
+    nextChapter();
   }
 
-  function tampilkanFYIGabungan() {
+  function tampilkanWujudAseliAdmin() {
     container.style.display = "none";
     fyiBox.style.display = "flex";
     fyiIndex = 0;
