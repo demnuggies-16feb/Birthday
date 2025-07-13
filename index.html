@@ -419,11 +419,12 @@ button:hover {
     }
 
     
-    let lari = setInterval(pindahTombol, 300);
+    let lari = setInterval(pindahTombol, 150);
 
     
     gameContainer.addEventListener("mousemove", pindahTombol);
     gameContainer.addEventListener("touchstart", pindahTombol);
+    gameContainer.addEventListener("click", pindahTombol);
 
     // Jika berhasil klik
     tombol.addEventListener("click", function(e) {
