@@ -402,7 +402,7 @@ button:hover {
         <h3>Terima kasih!</h3>
         <p>Jika ada saran atau pertanyaan, bisa hubungi Dem Nuggies yaa!</p>
         <div id="game-container">
-          <button id="tombolKabur">Klik Aku!</button>
+          <button id="tombolKabur">Yoi</button>
         </div>
       `;
       
@@ -426,23 +426,24 @@ button:hover {
     gameContainer.addEventListener("touchstart", pindahTombol);
     gameContainer.addEventListener("click", pindahTombol);
 
-    // Jika berhasil klik
-    tombol.addEventListener("click", function(e) {
-      e.stopPropagation();
-      clearInterval(lari);
-      gameContainer.innerHTML = `
-        <p><strong>Nice! See ya!</strong></p>
-        <p>
+
+   tombol.addEventListener("click", function(e) {
+  e.stopPropagation();
+  clearInterval(lari);
+  gameContainer.innerHTML = `
+    <p><strong>Nice! See ya!</strong></p>
+    <p>
       Anyway, click this if you're interested: 
       <a href="https://open.spotify.com/playlist/42P9nEtUEYvndavD1rr9Ry?si=3705234c26e94728" 
          target="_blank" 
          rel="noopener noreferrer">
-         Thanks!
+         Spotify Playlist
       </a>
     </p>
-        <button onclick="window.close()">Tutup Laman</button>
-      `;
-    });
+    <button onclick="window.close()">Tutup Laman</button>
+  `;
+});
+
 
     
     pindahTombol();
