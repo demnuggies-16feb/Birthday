@@ -374,20 +374,7 @@ button:hover {
     `;
   }
 
-  function lanjutSetelahTebak() {
-    container.style.display = "none";
-    fyiBox.style.display = "flex";
-    fyiDialogEl.innerText = "Sebentar lagi ada video yang aku rekam di 10 Juli, Selamat mendengarkan aku yapping!"
-    "PS: Kalau ga bisa di play pencet selesai trus ulang video, opsional bisa di tekan di pojok atas kanan untuk full screen"
-    fyiImage.src = "gg.webp";
-    fyiIndex++;
-
-  }
-
-
- 
-
-  function tampilkanAkhir() {
+   function tampilkanAkhir() {
     container.style.display = "block";
     videoWrapper.style.display = "none";
     container.innerHTML = `
@@ -422,7 +409,7 @@ function tutupLaman() {
     
     let lari = setInterval(pindahTombol, 200);
 
-    // Kabur juga saat disentuh/hover
+    
     gameContainer.addEventListener("mousemove", pindahTombol);
     gameContainer.addEventListener("touchstart", pindahTombol);
 
@@ -436,29 +423,22 @@ function tutupLaman() {
       `;
     });
 
-    
-    pindahTombol();
-  function kill(win) {
-    if (win && !win.closed) {
-      win.close();
-    }
+     function ulangVideo() {
+    container.style.display = "none";
+    videoWrapper.style.display = "block";
+    const video = document.getElementById("fyi-video");
+    video.src = video.src;
+    selesaiBtn.style.display = "inline-block";
   }
 
-  function cobaTutup() {
-    const win = window.open('', '_self');
-    kill(win);
+  function lanjutSetelahTebak() {
+    container.style.display = "none";
+    fyiBox.style.display = "flex";
+    fyiDialogEl.innerText = "Sebentar lagi ada video yang aku rekam di 10 Juli, Selamat mendengarkan aku yapping! " +
+    "PS: Kalau ga bisa di play pencet selesai trus ulang video, opsional bisa di tekan di pojok atas kanan untuk full screen";
+    fyiImage.src = "gg.webp";
+    fyiIndex++;
   }
-
-
-
-
-  function ulangVideo() {
-  container.style.display = "none";
-  videoWrapper.style.display = "block";
-  const video = document.getElementById("fyi-video");
-  video.src = video.src; 
-  selesaiBtn.style.display = "center"; 
-}
 
 </script>
 
