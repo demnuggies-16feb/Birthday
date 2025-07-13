@@ -374,7 +374,20 @@ button:hover {
     `;
   }
 
-   function tampilkanAkhir() {
+  function lanjutSetelahTebak() {
+    container.style.display = "none";
+    fyiBox.style.display = "flex";
+    fyiDialogEl.innerText = "Sebentar lai ada video yang aku rekam di 10 Juli, Please jangan skip videonya yaaa! Ada sesuatu yang mau aku sampampaikan :)" +
+    "PS: Kalau ga bisa di play pencet selesai trus ulang video, opsional bisa di tekan di pojok atas kanan untuk full screen";
+    fyiImage.src = "gg.webp";
+    fyiIndex++;
+
+  }
+
+
+ 
+
+  function tampilkanAkhir() {
     container.style.display = "block";
     videoWrapper.style.display = "none";
     container.innerHTML = `
@@ -384,13 +397,13 @@ button:hover {
     `;
   }
 
-function tutupLaman() {
+    function tutupLaman() {
       const container = document.getElementById('container');
       container.innerHTML = `
         <h3>Terima kasih!</h3>
         <p>Jika ada saran atau pertanyaan, bisa hubungi Dem Nuggies yaa!</p>
         <div id="game-container">
-          <button id="tombolKabur">Yoi!</button>
+          <button id="tombolKabur">Yoi</button>
         </div>
       `;
       
@@ -409,7 +422,7 @@ function tutupLaman() {
     
     let lari = setInterval(pindahTombol, 200);
 
-    
+    // Kabur juga saat disentuh/hover
     gameContainer.addEventListener("mousemove", pindahTombol);
     gameContainer.addEventListener("touchstart", pindahTombol);
 
@@ -418,27 +431,33 @@ function tutupLaman() {
       e.stopPropagation();
       clearInterval(lari);
       gameContainer.innerHTML = `
-        <p><strong>Oke bang mantap, maap iseng aku penasaran sama saran temenku soalnya</strong></p>
+        <p><strong>Oke bang mantap, maap iseng soalnya aku penasaran sama ide kawanku</strong></p>
         <button onclick="window.close()">Tutup Laman</button>
       `;
     });
 
-     function ulangVideo() {
-    container.style.display = "none";
-    videoWrapper.style.display = "block";
-    const video = document.getElementById("fyi-video");
-    video.src = video.src;
-    selesaiBtn.style.display = "inline-block";
+    
+    pindahTombol();
+    if (win && !win.closed) {
+      win.close();
+    }
   }
 
-  function lanjutSetelahTebak() {
-    container.style.display = "none";
-    fyiBox.style.display = "flex";
-    fyiDialogEl.innerText = "Sebentar lagi ada video yang aku rekam di 10 Juli, Selamat mendengarkan aku yapping! " +
-    "PS: Kalau ga bisa di play pencet selesai trus ulang video, opsional bisa di tekan di pojok atas kanan untuk full screen";
-    fyiImage.src = "gg.webp";
-    fyiIndex++;
+  function cobaTutup() {
+    const win = window.open('', '_self');
+    kill(win);
   }
+
+
+
+
+  function ulangVideo() {
+  container.style.display = "none";
+  videoWrapper.style.display = "block";
+  const video = document.getElementById("fyi-video");
+  video.src = video.src; 
+  selesaiBtn.style.display = "center"; 
+}
 
 </script>
 
