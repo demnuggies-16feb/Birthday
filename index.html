@@ -377,7 +377,8 @@ button:hover {
   function lanjutSetelahTebak() {
     container.style.display = "none";
     fyiBox.style.display = "flex";
-    fyiDialogEl.innerText = "Sebentar lai ada video yang aku rekam di 10 Juli, Please jangan skip videonya yaaa! Ada sesuatu yang mau aku sampampaikan :)";
+    fyiDialogEl.innerText = "Sebentar lagi ada video yang aku rekam di 10 Juli, Selamat mendengarkan aku yapping!"
+    "PS: Kalau ga bisa di play pencet selesai trus ulang video, opsional bisa di tekan di pojok atas kanan untuk full screen"
     fyiImage.src = "gg.webp";
     fyiIndex++;
 
@@ -396,45 +397,47 @@ button:hover {
     `;
   }
 
-    function tutupLaman() {
+function tutupLaman() {
       const container = document.getElementById('container');
       container.innerHTML = `
         <h3>Terima kasih!</h3>
         <p>Jika ada saran atau pertanyaan, bisa hubungi Dem Nuggies yaa!</p>
         <div id="game-container">
-          <button id="tombolKabur">Klik Aku!</button>
+          <button id="tombolKabur">Yoi!</button>
         </div>
       `;
+      
+      const tombol = document.getElementById("tombolKabur");
+    const gameContainer = document.getElementById("game-container");
 
-           setTimeout(() => {
-        const tombol = document.getElementById("tombolKabur");
-        const gameContainer = document.getElementById("game-container");
-
-        function pindahTombol() {
-          const maxX = gameContainer.offsetWidth - tombol.offsetWidth;
-          const maxY = gameContainer.offsetHeight - tombol.offsetHeight;
-
-          const randX = Math.floor(Math.random() * maxX);
-          const randY = Math.floor(Math.random() * maxY);
-
-          tombol.style.left = `${randX}px`;
-          tombol.style.top = `${randY}px`;
-        }
-
-        // Tombol kabur saat mouse gerak atau sentuhan
-        gameContainer.addEventListener("mousemove", pindahTombol);
-        gameContainer.addEventListener("touchstart", pindahTombol);
-
-        // Jika berhasil diklik
-        tombol.addEventListener("click", function(e) {
-          e.stopPropagation();
-          gameContainer.innerHTML = `
-            <p>Oke bro, maap iseng abis liat tutor di youtube soalnya, hasil penasaran</p>
-            <button onclick="cobaTutup()">Tutup Laman</button>
-          `;
-        });
-      }, 100);
+    function pindahTombol() {
+      const maxX = gameContainer.offsetWidth - tombol.offsetWidth;
+      const maxY = gameContainer.offsetHeight - tombol.offsetHeight;
+      const randX = Math.random() * maxX;
+      const randY = Math.random() * maxY;
+      tombol.style.left = `${randX}px`;
+      tombol.style.top = `${randY}px`;
     }
+
+    
+    let lari = setInterval(pindahTombol, 200);
+
+    // Kabur juga saat disentuh/hover
+    gameContainer.addEventListener("mousemove", pindahTombol);
+    gameContainer.addEventListener("touchstart", pindahTombol);
+
+    
+    tombol.addEventListener("click", function(e) {
+      e.stopPropagation();
+      clearInterval(lari);
+      gameContainer.innerHTML = `
+        <p><strong>Oke bang mantap, maap iseng aku penasaran sama saran temenku soalnya</strong></p>
+        <button onclick="window.close()">Tutup Laman</button>
+      `;
+    });
+
+    
+    pindahTombol();
   function kill(win) {
     if (win && !win.closed) {
       win.close();
