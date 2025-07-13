@@ -5,39 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Message in a Browser</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-image: url('background.gif'); 
-      background-size: cover;
-      background-position: center;
-      background-repeat: repeat;
-      text-align: center;
-      padding: 30px;
-      min-height: 100vh;
-    }
+  
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('background.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+  text-align: center;
+  padding: 30px 15px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  margin: 0;
+}
 
-    #container {
-      max-width: 500px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      position: relative;
-    }
 
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 14px;
-      cursor: pointer;
-    }
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 
-    input {
-      padding: 8px;
-      width: 80%;
-      font-size: 14px;
-    }
+#container {
+  background: #fefefe;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: auto;
+  margin-top: 40px;
+  box-sizing: border-box;
+}
+
+input {
+  padding: 10px;
+  width: 100%;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #aaa;
+  outline: none;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #f0f0f0;
+  color: #007aff;
+  border: none;
+  padding: 12px 24px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  margin: 10px 0;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.02);
+}
+
+
+
+   
+
 
     #fyi-box {
       display: none;
@@ -70,13 +107,32 @@
       font-size: 12px;
       color: #111111;
       margin-top: 20px;
-      position: relative;
+      position: flex;
       bottom: 10px;
       left: 0;
       right: 0;
       text-align: center;
       z-index: 10;
     }
+
+    #game-container {
+  position: relative;
+  height: 200px;
+  margin-top: 20px;
+}
+
+#tombolKabur {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  background-color: #007aff;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: absolute;
+}
+
   </style>
 </head>
 <body>
@@ -105,6 +161,7 @@
   <button id="selesaiBtn" onclick="tampilkanAkhir()" style="display: none;">Selesai</button>
 </div>
 
+
 <p id="watermark">Made with love and effort by Dem Nuggies, 2025</p>
 
 <script>
@@ -122,7 +179,7 @@
   let sudahTebakNama = false;
   let percobaanNama = 0;
 
-  const nextDialog = [
+  const fyiDialog = [
     { text: "Halo, perkenalkan aku Dem Nuggies dan aku membuat program ini untuk memperingati ulang tahun Ahnaf yang ke 17.", img: "emoji-smiley.gif" },
     { text: "Dem Nuggies, A.K.A calon dokter tersebut menghabiskan 2 Bulan untuk belajar, riset dan membuat ini.", img: "smile-keyboard.gif" },
     { text: "Dibantu oleh berbagai sumber, termasuk buku, internet, dan teman-teman.....", img: "smile-keyboard.gif" },
@@ -138,21 +195,12 @@
     { isTebak: true }
   ];
 
-  const perpisahan = [
-    "I hope this year brings you closer to your dreams.",
-    "And hopefully this year brings you only best of the best.",
-    "Terima kasih sudah bersedia meluangkan waktu untuk berinteraksi denganku.",
-    "Tapi ini masih setengah jalan wkwkwkwwk",
-    "Dikit lagi ya, aku masih mau kasih tau beberapa hal penting",
-    "Half way there bro! Semangat mencetnya!",
-  ];
-
   let fyiIndex = 0;
 
   function keInputNama() {
     container.innerHTML = `
-      <h3>Who's there? (silahkan isi dengan nama panggilan)</h3>
-      <input id="namaInput" type="text" placeholder="Tulis namamu..." />
+      <h3>Who's there?</h3>
+      <input id="namaInput" type="text" placeholder="Tulis nama panggilan aja dah" />
       <br>
       <button onclick="periksaNama()">Submit</button>
     `;
@@ -188,14 +236,14 @@
         document.getElementById("pesan").innerText = pesanAwal[index];
         index++;
       } else {
-        tampilkanSweet17();
+        tampilkanTombolWkwk();
       }
     };
 
     tampilkanBerikutnya();
   }
 
-  function tampilkanSweet17() {
+  function tampilkanTombolWkwk() {
     container.innerHTML = `
       <p><strong>Hehe... Anyway, Happy Sweet 17th Birthday, Ahnaf! 🎂</strong></p>
       <button onclick="tampilkanInputLanjut()">Lanjut</button>
@@ -207,11 +255,11 @@
       <p>Tua betul 17 tahun, age bikin KTP :D</p>
       <input placeholder="Tulis apa aja..." />
       <br>
-      <button onclick="tampilkanPilihanJawaban()">Ketik apapun untuk lanjutkan</button>
+      <button onclick="tampilkanPilihanHadiah()">Ketik apapun untuk lanjutkan</button>
     `;
   }
 
-  function tampilkanPilihanJawaban() {
+  function tampilkanPilihanHadiah() {
     container.innerHTML = `
       <h3>Dan bagaimana hadiahnya?</h3>
       <button onclick="respon('A')">A. Alamakkk, ga expect aku wak</button><br>
@@ -228,31 +276,39 @@
 
     container.innerHTML = `
       <p>${responText}</p>
-      <button onclick="tampilkanNext()">Lanjut</button>
+      <button onclick="tampilkanPerpisahan()">Lanjut</button>
     `;
   }
 
-  function tampilkanNext() {
+  function tampilkanPerpisahan() {
+    const perpisahan = [
+      "I hope this year brings you closer to your dreams.",
+      "And hopefully this year brings you only best of the best.",
+      "Terima kasih sudah bersedia meluangkan waktu untuk berinteraksi denganku.",
+      "Tapi ini masih setengah jalan wkwkwkwwk",
+      "Dikit lagi ya, aku masih mau kasih tau beberapa hal penting",
+      "Half way there bro! Semangat mencetnya!",
+    ];
     let index = 0;
 
     container.innerHTML = `
       <p id="pesanAkhir"></p>
-      <button onclick="nextChapter()">Lanjut</button>
+      <button onclick="nextPerpisahan()">Lanjut</button>
     `;
 
-    window.nextChapter = function () {
+    window.nextPerpisahan = function () {
       if (index < perpisahan.length) {
         document.getElementById("pesanAkhir").innerText = perpisahan[index];
         index++;
       } else {
-        tampilkanWujudAseliAdmin();
+        tampilkanFYIGabungan();
       }
     };
 
-    nextChapter();
+    nextPerpisahan();
   }
 
-  function tampilkanWujudAseliAdmin() {
+  function tampilkanFYIGabungan() {
     container.style.display = "none";
     fyiBox.style.display = "flex";
     fyiIndex = 0;
@@ -261,7 +317,7 @@
   }
 
   function nextFYI() {
-    const item = nextDialog[fyiIndex];
+    const item = fyiDialog[fyiIndex];
     if (item && item.isTebak) {
       tebakPembuat();
     } else if (item) {
@@ -281,7 +337,7 @@
     container.style.display = "block";
     container.innerHTML = `
       <h3>Siapa nama pembuat program ini?</h3>
-      <input id="namaTebakan" type="text" placeholder="Tebak namanya..." />
+      <input id="namaTebakan" type="text" placeholder="Tebak siapa wujud aseli atmin" />
       <br>
       <button onclick="cekJawabanNama()">Submit</button>
     `;
@@ -321,10 +377,14 @@
   function lanjutSetelahTebak() {
     container.style.display = "none";
     fyiBox.style.display = "flex";
-    fyiDialogEl.innerText = "Sebentar lagi ada video yang aku rekam di 10 Juli, Please jangan skip videonya yaaa! Ada sesuatu yang mau aku sampampaikan :)";
+    fyiDialogEl.innerText = "Sebentar lai ada video yang aku rekam di 10 Juli, Please jangan skip videonya yaaa! Ada sesuatu yang mau aku sampampaikan :)";
     fyiImage.src = "gg.webp";
     fyiIndex++;
+
   }
+
+
+ 
 
   function tampilkanAkhir() {
     container.style.display = "block";
@@ -336,22 +396,67 @@
     `;
   }
 
-  function tutupLaman() {
-    document.body.innerHTML = `
-      <div style="text-align:center; padding:50px;">
-        <h3>Terima kasih! Jika ada saran atau pertanyaan bisa hubungi Dem Nuggies yaa!</h3>
-        <p>Silakan tutup tab ini kapan saja.</p>
-      </div>
-    `;
+    function tutupLaman() {
+      const container = document.getElementById('container');
+      container.innerHTML = `
+        <h3>Terima kasih!</h3>
+        <p>Jika ada saran atau pertanyaan, bisa hubungi Dem Nuggies yaa!</p>
+        <div id="game-container">
+          <button id="tombolKabur">Klik Aku!</button>
+        </div>
+      `;
+
+           setTimeout(() => {
+        const tombol = document.getElementById("tombolKabur");
+        const gameContainer = document.getElementById("game-container");
+
+        function pindahTombol() {
+          const maxX = gameContainer.offsetWidth - tombol.offsetWidth;
+          const maxY = gameContainer.offsetHeight - tombol.offsetHeight;
+
+          const randX = Math.floor(Math.random() * maxX);
+          const randY = Math.floor(Math.random() * maxY);
+
+          tombol.style.left = `${randX}px`;
+          tombol.style.top = `${randY}px`;
+        }
+
+        // Tombol kabur saat mouse gerak atau sentuhan
+        gameContainer.addEventListener("mousemove", pindahTombol);
+        gameContainer.addEventListener("touchstart", pindahTombol);
+
+        // Jika berhasil diklik
+        tombol.addEventListener("click", function(e) {
+          e.stopPropagation();
+          gameContainer.innerHTML = `
+            <p>Oke bro, maap iseng abis liat tutor di youtube soalnya, hasil penasaran</p>
+            <button onclick="cobaTutup()">Tutup Laman</button>
+          `;
+        });
+      }, 100);
+    }
+  function kill(win) {
+    if (win && !win.closed) {
+      win.close();
+    }
   }
 
-  function ulangVideo() {
-    container.style.display = "none";
-    videoWrapper.style.display = "block";
-    const video = document.getElementById("fyi-video");
-    video.src = video.src;
-    selesaiBtn.style.display = "inline-block";
+  function cobaTutup() {
+    const win = window.open('', '_self');
+    kill(win);
   }
+
+
+
+
+  function ulangVideo() {
+  container.style.display = "none";
+  videoWrapper.style.display = "block";
+  const video = document.getElementById("fyi-video");
+  video.src = video.src; 
+  selesaiBtn.style.display = "center"; 
+}
+
 </script>
 
 </body>
